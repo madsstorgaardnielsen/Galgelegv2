@@ -58,7 +58,7 @@ public class Galgeleg extends AppCompatActivity implements View.OnClickListener 
         gameOutcomeMsg.setVisibility(View.INVISIBLE);
 
         //sætter det hemmelige ord ved start
-        String word = "Ordet der skal gættes er på "+galgelogik.getSynligtOrd().length()+" bogstaver";
+        String word = "Ordet er på "+galgelogik.getSynligtOrd().length()+" bogstaver";
         secretWord.setText(word);
 
         //sætter forkerte svar ved start
