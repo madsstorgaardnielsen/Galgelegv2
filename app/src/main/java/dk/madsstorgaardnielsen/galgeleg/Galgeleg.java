@@ -139,6 +139,7 @@ public class Galgeleg extends AppCompatActivity implements View.OnClickListener 
             gameOutcomeMsg.setText(winnerStr);
 
         } else if (galgelogik.erSpilletTabt()) {
+            secretWord.setText("Ordet var: "+galgelogik.getOrdet());
             String loserString = "DU TABTE!";
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
