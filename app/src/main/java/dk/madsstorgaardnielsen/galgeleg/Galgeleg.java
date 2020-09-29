@@ -3,6 +3,7 @@ package dk.madsstorgaardnielsen.galgeleg;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -30,6 +31,8 @@ public class Galgeleg extends AppCompatActivity implements View.OnClickListener 
 
     ImageView imageView;
 
+    Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +57,16 @@ public class Galgeleg extends AppCompatActivity implements View.OnClickListener 
         endGame.setVisibility(View.INVISIBLE);
         gameOutcomeMsg.setVisibility(View.INVISIBLE);
 
+        //sætter det hemmelige ord ved start
+        String word = "Ordet der skal gættes er på "+galgelogik.getSynligtOrd().length()+" bogstaver";
+        secretWord.setText(word);
+
+        String wrongAnswers = "forkerte svar: 0/7";
+        nmbrOfWrongGuesses.setText(wrongAnswers);
+
+        String lettersUsed = "Ingen gæt fortaget endnu";
+        usedLetters.setText(lettersUsed);
+
         guess.setOnClickListener(this);
         newGame.setOnClickListener(this);
         endGame.setOnClickListener(this);
@@ -73,13 +86,12 @@ public class Galgeleg extends AppCompatActivity implements View.OnClickListener 
 
         editText.setText(""); //sørger for at edittext bliver clearet efter hvert gæt så spilleren ikke selv skal slette bogstaver efter hver tur.
 
-
         startNewGame(v); //starter nyt spil hvis brugeren trykker "Spil igen"
 
-        //Lukker appen ned
+        //Går til menuen
         if (v == endGame) {
             finish();
-            System.exit(0);
+            intent = new Intent(this, MainActivity.class);
         }
     }
 
@@ -105,7 +117,7 @@ public class Galgeleg extends AppCompatActivity implements View.OnClickListener 
         usedLetterList = galgelogik.getBrugteBogstaver();
         for (int i = 0; i <= usedLetterList.size() - 1; i++) {
             used.append(usedLetterList.get(i)).append(", ");
-            usedLetters.setText(used);
+            usedLetters.setText("Tidligere gæt:\n"+used);
         }
     }
 
@@ -133,17 +145,18 @@ public class Galgeleg extends AppCompatActivity implements View.OnClickListener 
     }
 
     private void isGuessCorrect() {
-        String str;
+        String str,str2;
         String updateWord;
         int wrongGuesses;
         if (galgelogik.erSidsteBogstavKorrekt()) {
-            str = "\"" + editText.getText() + "\"" + " er korrekt!";
+            str = "\"" + editText.getText() + "\"" + " var korrekt!";
             updateWord = galgelogik.getSynligtOrd();
             secretWord.setText(updateWord);
         } else {
             wrongGuesses = galgelogik.getAntalForkerteBogstaver();
-            str = "\"" + editText.getText() + "\"" + " er IKKE korrekt!";
-            nmbrOfWrongGuesses.setText(wrongGuesses + "/7");
+            str = "\"" + editText.getText() + "\"" + " var IKKE korrekt!";
+            str2 = "forkerte svar: "+wrongGuesses + "/7";
+            nmbrOfWrongGuesses.setText(str2);
 
             imageView = findViewById(R.id.imageView);
             updateImage(wrongGuesses); //opdaterer galgen
