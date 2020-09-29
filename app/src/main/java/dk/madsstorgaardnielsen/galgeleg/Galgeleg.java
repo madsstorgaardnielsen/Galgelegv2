@@ -61,16 +61,18 @@ public class Galgeleg extends AppCompatActivity implements View.OnClickListener 
         String word = "Ordet der skal gættes er på "+galgelogik.getSynligtOrd().length()+" bogstaver";
         secretWord.setText(word);
 
+        //sætter forkerte svar ved start
         String wrongAnswers = "forkerte svar: 0/7";
         nmbrOfWrongGuesses.setText(wrongAnswers);
 
+        //sætter gæt ved start
         String lettersUsed = "Ingen gæt fortaget endnu";
         usedLetters.setText(lettersUsed);
 
+        //Listeners
         guess.setOnClickListener(this);
         newGame.setOnClickListener(this);
         endGame.setOnClickListener(this);
-
     }
 
     @Override
@@ -96,6 +98,8 @@ public class Galgeleg extends AppCompatActivity implements View.OnClickListener 
     }
 
     private void startNewGame(View v) {
+        //Kalder startNytSpil metoden
+        //Nulstiller alle værdier i UI samt sætter udfalds beskeden+nytspil/afslut spil knappernes visibility
         if (v == newGame) {
             galgelogik.startNytSpil();
             secretWord.setText("Gæt igen :)");
@@ -110,6 +114,7 @@ public class Galgeleg extends AppCompatActivity implements View.OnClickListener 
         }
     }
 
+    //bygger en string ud af liste for tidligere gæt og sætter tekst i usedLetters textview
     private void guessedLetters() {
         StringBuilder used;
         ArrayList<String> usedLetterList;
@@ -121,6 +126,7 @@ public class Galgeleg extends AppCompatActivity implements View.OnClickListener 
         }
     }
 
+    //Skjuler keyboard, Udskriver vinder/taber besked, gør nytspil/afslutspil knapperne synlige
     private void isWinner(View v) {
         if (galgelogik.erSpilletVundet()) {
             String winnerStr = "DU VANDT!";
@@ -144,6 +150,7 @@ public class Galgeleg extends AppCompatActivity implements View.OnClickListener 
         }
     }
 
+    //angiver om det bogstav der blev gættet på var korrekt/ukorrekt, hvis ukorrekt kaldes update image metoden i else statement
     private void isGuessCorrect() {
         String str,str2;
         String updateWord;
@@ -165,6 +172,7 @@ public class Galgeleg extends AppCompatActivity implements View.OnClickListener 
         feedbackText.setText(str);
     }
 
+    //opdaterer galgebilledet ved forkerte svar
     public void updateImage(int wrongGuesses) {
         switch (wrongGuesses) {
             case 1:
