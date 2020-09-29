@@ -23,7 +23,6 @@ public class Galgelogik {
 
     public Galgelogik() {
         muligeOrd.add("bil");
-        /*
         muligeOrd.add("computer");
         muligeOrd.add("programmering");
         muligeOrd.add("motorvej");
@@ -33,7 +32,6 @@ public class Galgelogik {
         muligeOrd.add("solsort");
         muligeOrd.add("tyve");
 
-         */
         startNytSpil();
     }
 
